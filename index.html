@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>OpenClicker</title>
+    <title id="main_title">OpenClicker</title>
 	
 	<!-- Bootstrap -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +19,7 @@
 	
 	<div id = "main_menu">
 		<h1>OpenClicker</h1>
-		<p class="text-muted">Fuck iClicker, I want my $40 back.</p>
+		<p class="text-muted" id="saltymemo">Fuck iClicker, I want my $40 back.</p>
 		<!--We are using node <script>document.write(process.versions.node)</script>,
 		Chrome <script>document.write(process.versions.chrome)</script>,
 		and Electron <script>document.write(process.versions.electron)</script>.-->
@@ -135,6 +135,7 @@
 		<h2 id = "question_display_text">Sample Question</h2>
 		
 	</div>
+
 	<!-- startup script to hide divs for single-page application -->
 	<script>
 		hide_div('quiz_builder');

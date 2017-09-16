@@ -125,9 +125,11 @@ let load_quiz_in_editor = function () {
 	//TODO: load quiz to be edited later
 }
 
+var running_quiz_allow_answers = false;
 var running_quiz = null;
 var running_question_index = -1;
 var running_quiz_code = null;
+var running_quiz_user_answers = [];
 let onclick_run_quiz = function () {
 	var {
 		dialog
@@ -165,6 +167,7 @@ let onclick_open_quiz = function() {
 
 let onclick_start_quiz = function() {
 	console.log("starting quiz");
+	running_quiz_allow_answers = true;
 	document.getElementById('open_quiz_button').style.display = 'none';
 	document.getElementById('start_quiz_button').style.display = 'none';
 	next_question();
@@ -183,5 +186,8 @@ let next_question = function() {
 		document.getElementById('run_answer_3').innerText = running_question.options[2].text;
 		document.getElementById('run_answer_4').innerText = running_question.options[3].text;	
 	}
+}
 
+let end_quiz = function() {
+	running_quiz_allow_answers = false;
 }

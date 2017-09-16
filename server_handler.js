@@ -50,17 +50,30 @@ let start_server_listen = function () {
 	express_app.post('/quiz', function (req, res) {
 		console.log("POST RECIEVED");
 		//TODO: should do json validation here also
-		//console.log(req.body.quiz_code);
+		console.log(req.body);
 		user_answer = {
 			"request_ip": req.ip,
-			"client_user_id": truncate(req.body.client_user_id, 32),
-			"quiz_code": truncate(req.body.quiz_code, 4),
-			"answer_number": truncate(req.body.answer_number, 1),
+			"client_user_id": (req.body["body[client_user_id]"] || "").toLowerCase(),
+			"quiz_code": (req.body["body[quiz_code]"] || "").toUpperCase(),
+			"answer_number": req.body["body[answer_number]"],
 			"recieved_timestamp": Date.now()			
 		}
 		console.log(user_answer);
+		if (running_quiz_allow_answers === true && running_quiz != null && user_answer.quiz_code == running_quiz_code) {
+			var key = `CLIENT_USER_ID:${user_answer.client_user_id}`
+			/*var existing_answer = running_quiz_user_answers[key];
+			if (existing_answer) {
+				
+			}*/
+			console.log("user answer stored");
+			running_quiz_user_answers[key] = user_answer;
+		} else {
+			console.log("user answer rejected");
+		}
 	});
 }
+
+
 
 module.exports = {
 	start_server_listen: start_server_listen,

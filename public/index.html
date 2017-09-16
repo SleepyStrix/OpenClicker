@@ -10,9 +10,10 @@
   <script src="./js/jquery.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
   <script src="./backbone.js"></script>
-  <h1>OpenClicker<h1>
+  <h1>OpenClicker</h1>
+  <p class="text-muted" id="saltymemo">Fuck iClicker, I want my $40 back.</p>
   <br>
-	<label class="control-label" for="client_user_id">Enter Your Unique StudentID:</label>
+	<label class="control-label" for="client_user_id">Enter Your Unique Student ID:</label>
 	<input class="form-control" id="client_user_id" type="text">
 	<label class="control-label" for="client_quiz_code">Enter Quiz Code:</label>
 	<input class="form-control" id="client_quiz_code" type="text">
@@ -34,8 +35,23 @@
 	</div>
   
 	<script>
+
+		//style
+		let saltflavors = [
+		"yClicker",
+		"No $40 remote here.",
+		"Wait, what's the clicker frequency?",
+		"Time to get those attendence points.",
+		"DieClicker?",
+		"'Oh shit I forgot my remote D:'",
+		"Little harder to forget this one.",
+		];
+		let salt = saltflavors[Math.floor(Math.random() * saltflavors.length)];
+		document.getElementById('saltymemo').innerText = salt;
+		//class
 		check_quiz_status_on = true;
 		client_get_quiz_status();
+		//scream at own saas
 	</script>
   </body>
 </html>
