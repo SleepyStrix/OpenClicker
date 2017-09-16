@@ -25,37 +25,34 @@
 		and Electron <script>document.write(process.versions.electron)</script>.-->
 		<!--button type="button" onclick="test();">Build a quiz!</button-->
 		<br>
-		<a href="#" class="btn btn-primary btn-lg" onclick="switch_div('main_menu','quiz_builder');">
+		<a href="#" class="btn btn-primary btn-lg" onclick="open_quiz_builder();">
 		Build a quiz!
 		</a>		
 	</div>
 	
 	<div id ="quiz_builder">
 		<script>
-			var quiz = new_quiz();
-			console.log(quiz);
+			var active_question = 1;
 		</script>
 		<div class="form-group">
 			<label class="control-label" for="quiz_title">Quiz Title</label>
 			<input class="form-control" id="quiz_title" type="text">
 		</div>
 		
-		<a href="#" class="btn btn-primary" onclick="show_div('question_builder_mc');">
+		<!--a href="#" class="btn btn-primary" onclick="show_div('question_builder_mc');">
 		New Multiple Choice Question
-		</a>
+		</a-->
 		
 		<ul class="pagination">
 		  <li><a href="#">&laquo;</a></li>
-		  <li><a href="#">1</a></li>
-		  <li><a href="#">2</a></li>
-		  <li><a href="#">3</a></li>
-		  <li><a href="#">4</a></li>
-		  <li><a href="#">5</a></li>
+		  <li onclick="onclick_question_page(1);"><a href="#">1</a></li>
+		  <li onclick="onclick_question_page(2);"><a href="#">2</a></li>
+		  <li onclick="onclick_question_page(3);"><a href="#">3</a></li>
+		  <li onclick="onclick_question_page(4);"><a href="#">4</a></li>
+		  <li onclick="onclick_question_page(5);"><a href="#">5</a></li>
 		  <li><a href="#">&raquo;</a></li>
 		</ul>
-	</div>	
-	
-	
+		
 	<div id="question_builder_mc">
 		<br>
 		<div class="form-group">
@@ -103,10 +100,13 @@
 		Save Question
 		</a>
 	</div>
+		<a href="#" class="btn btn-primary" onclick="save_quiz();">
+		Save Quiz
+		</a>
+	</div>	
 	
 	<!-- startup script to hide divs for single-page application -->
 	<script>
-		hide_div('question_builder_mc');
 		hide_div('quiz_builder');
 	</script>
 	
