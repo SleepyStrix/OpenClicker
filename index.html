@@ -26,7 +26,10 @@
 		<!--button type="button" onclick="test();">Build a quiz!</button-->
 		<br>
 		<a href="#" class="btn btn-primary btn-lg" onclick="open_quiz_builder();">
-		Build a quiz!
+		Build a quiz
+		</a>	
+		<a href="#" class="btn btn-primary btn-lg" onclick="onclick_run_quiz();">
+		Run a quiz
 		</a>		
 	</div>
 	
@@ -96,18 +99,36 @@
 			</div>
 			<input class="form-control" id="option_4" type="text">
 		</div>
-		<a href="#" class="btn btn-primary" onclick="save_question();">
+		<!--a href="#" class="btn btn-primary" onclick="save_question();">
 		Save Question
-		</a>
+		</a-->
 	</div>
 		<a href="#" class="btn btn-primary" onclick="save_quiz();">
 		Save Quiz
 		</a>
+		<a href="#" class="btn btn-primary" onclick="switch_div('quiz_builder', 'main_menu');">
+		Main Menu
+		</a>
 	</div>	
 	
+	<div id="quiz_runner">
+		<h2 id="quiz_run_title">Sample Quiz Title</h2>
+		<h3 id="quiz_join_info">Quiz is CLOSED<h3>
+		<a href="#" class="btn btn-primary" onclick="onclick_open_quiz();">
+		Open Quiz
+		</a>
+	</div>
+	
+	<div id="question_display">
+		
+		<h2 id = "question_display_text">Sample Question</h2>
+		
+	</div>
 	<!-- startup script to hide divs for single-page application -->
 	<script>
 		hide_div('quiz_builder');
+		hide_div('quiz_runner');
+		hide_div('question_display');
 	</script>
 	
   </body>

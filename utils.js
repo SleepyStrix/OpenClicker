@@ -1,8 +1,8 @@
 const {
 	remote
 } = require('electron');
-
-
+const fs = require('fs');
+const server_handler = require("./server_handler");
 
 let test = function () {
 	console.log("test debug");
@@ -30,7 +30,7 @@ let load_page_in_current = function (page_url) {
 let open_quiz_builder = function () {
 	current_quiz = new_quiz();
 	load_current_question();
-	switch_div('main_menu','quiz_builder');
+	switch_div('main_menu', 'quiz_builder');
 }
 
 var current_quiz = null;
@@ -43,7 +43,7 @@ let new_quiz = function (quiz) {
 	}
 	for (var j = 0; j < 5; j++) {
 		var question = {
-			"question_text" : "",
+			"question_text": "",
 			"options": []
 		}
 		for (var i = 0; i < 4; i++) {
@@ -61,7 +61,7 @@ let new_quiz = function (quiz) {
 
 let save_question = function () {
 	var question = {
-		"question_text" : "",
+		"question_text": "",
 		"options": []
 	}
 	question.question_text = document.getElementById('question_text').value || "";
@@ -88,33 +88,70 @@ let onclick_question_page = function (page_num) {
 	load_current_question();
 }
 
-let load_current_question = function() {
+let load_current_question = function () {
 	var current_question = current_quiz.questions[current_question_index];
 	console.log("Loading question:");
 	console.log(current_question);
+	document.getElementById('question_text').value = current_question.question_text;
 	for (var i = 0; i < 4; i++) {
 		let option_num = i + 1;
-		document.getElementById('question_text').value = current_question.quesion_text || "";
 		document.getElementById('option_' + option_num).value = current_question.options[i].text;
 		document.getElementById('option_' + option_num + '_correct').checked = current_question.options[i].correct;
 		//console.log(option);
 	}
 }
 
-let save_quiz = function() {
+let save_quiz = function () {
 	save_question();
 	current_quiz.title = document.getElementById('quiz_title').value;
-	var { dialog } = require('electron').remote;	
-	var path = dialog.showSaveDialog({buttonLabel: "Save Quiz"}) + ".json";
+	var {
+		dialog
+	} = require('electron').remote;
+	var path = dialog.showSaveDialog({
+			buttonLabel: "Save Quiz"
+		}) + ".json";
 	// writefile.js
-	var fs = require('fs');
+
 	var content = JSON.stringify(current_quiz);
 	if (path != undefined && path != null && path != "") {
-		fs.writeFile(path, content, 'utf8', function(err) {
-		if (err) throw err;
+		fs.writeFile(path, content, 'utf8', function (err) {
+			if (err)
+				throw err;
 		});
 	}
 }
 
-let load_quiz = function () {
+let load_quiz_in_editor = function () {
+	//TODO: load quiz to be edited later
+}
+
+var running_quiz = null;
+var running_question_index = -1;
+let onclick_run_quiz = function () {
+	var {
+		dialog
+	} = require('electron').remote;
+	var path = dialog.showOpenDialog({
+			properties: ['openFile']
+		})[0];
+	console.log(path);
+	if (path != undefined && path != null && path != "") {
+		var json_string = fs.readFileSync(path, "utf8");
+		var quiz = JSON.parse(json_string);
+		running_quiz = quiz;
+		console.log("Quiz loaded");
+		console.log(quiz);
+		switch_div('main_menu', 'quiz_runner');
+		console.log(document.getElementById('quiz_run_title'));
+		document.getElementById('quiz_run_title').innerText = running_quiz.title;
+	}
+}
+
+let onclick_open_quiz = function() {
+	console.log("opening quiz");
+	console.log(server_handler);
+	server_handler.start_server_listen();
+	var ip = require("ip");
+	document.getElementById('quiz_join_info').innerText =
+	"Quiz is open, please enter: " + ip.address() + ":" + server_handler.get_port();
 }
