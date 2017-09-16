@@ -19,6 +19,7 @@ let start_server_listen = function () {
 	express_app.get('/quiz', (request, response) => {
 		if (running_quiz != undefined && running_quiz != null && running_question_index >= 0) {
 			var ques = running_quiz.questions[running_question_index];
+			console.log("ques: " + ques);
 			var quiz_status = {
 				"title": running_quiz.title,
 				"question": {
@@ -81,6 +82,7 @@ let start_server_listen = function () {
 		} else {
 			console.log("user answer rejected");
 		}
+		
 	});
 }
 
