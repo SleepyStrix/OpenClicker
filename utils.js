@@ -167,5 +167,21 @@ let onclick_start_quiz = function() {
 	console.log("starting quiz");
 	document.getElementById('open_quiz_button').style.display = 'none';
 	document.getElementById('start_quiz_button').style.display = 'none';
-	running_question_index = 0;
+	next_question();
+}
+
+let next_question = function() {
+	let next_index = running_question_index + 1;
+	if (next_index >= 4) {
+		
+	} else {
+		running_question_index = next_index;
+		console.log(running_question_index);
+		var running_question = running_quiz.questions[running_question_index];
+		document.getElementById('run_answer_1').innerText = running_question.options[0].text;
+		document.getElementById('run_answer_2').innerText = running_question.options[1].text;
+		document.getElementById('run_answer_3').innerText = running_question.options[2].text;
+		document.getElementById('run_answer_4').innerText = running_question.options[3].text;	
+	}
+
 }
