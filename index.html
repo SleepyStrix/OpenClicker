@@ -5,30 +5,110 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>OpenClicker</title>	
+    <title>OpenClicker</title>
 	
 	<!-- Bootstrap -->
-    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
-	<script src="mainmenu.js"></script> 
+	<script src="utils.js"></script> 
 	<script>
 		window.jQuery = window.$ = require('jquery');
 	</script>
-	<!--script src="./node_modules/jquery/dist/jquery.min.js"></script-->
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script-->
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="./node_modules/bootstrap/dist/js/bootstrap.js"></script>
 	
-	<div id = "main_menu_div" display="none">
+	<div id = "main_menu">
 		<h1>OpenClicker</h1>
-		We are using node <script>document.write(process.versions.node)</script>,
+		<p class="text-muted">Fuck iClicker, I want my $40 back.</p>
+		<!--We are using node <script>document.write(process.versions.node)</script>,
 		Chrome <script>document.write(process.versions.chrome)</script>,
-		and Electron <script>document.write(process.versions.electron)</script>.
-		<button type="button" onclick="test();">Build a quiz!</button>
-		
+		and Electron <script>document.write(process.versions.electron)</script>.-->
+		<!--button type="button" onclick="test();">Build a quiz!</button-->
+		<br>
+		<a href="#" class="btn btn-primary btn-lg" onclick="switch_div('main_menu','quiz_builder');">
+		Build a quiz!
+		</a>		
 	</div>
+	
+	<div id ="quiz_builder">
+		<script>
+			var quiz = new_quiz();
+			console.log(quiz);
+		</script>
+		<div class="form-group">
+			<label class="control-label" for="quiz_title">Quiz Title</label>
+			<input class="form-control" id="quiz_title" type="text">
+		</div>
+		
+		<a href="#" class="btn btn-primary" onclick="show_div('question_builder_mc');">
+		New Multiple Choice Question
+		</a>
+		
+		<ul class="pagination">
+		  <li><a href="#">&laquo;</a></li>
+		  <li><a href="#">1</a></li>
+		  <li><a href="#">2</a></li>
+		  <li><a href="#">3</a></li>
+		  <li><a href="#">4</a></li>
+		  <li><a href="#">5</a></li>
+		  <li><a href="#">&raquo;</a></li>
+		</ul>
+	</div>	
+	
+	
+	<div id="question_builder_mc">
+		<br>
+		<div class="form-group">
+			<label for="textArea" class="col-lg-2 control-label">Question Text:</label>
+			<div class="col-lg-10">
+				<textarea class="form-control" rows="3" id="question_text"></textarea>
+				<span class="help-block">Ex: What is 2 + 2?</span>
+			</div>
+		</div>
+		<br>
+		<div class="form-group">
+			<label class="control-label" for="option_1">Option 1</label>
+			<div class="checkbox">
+				<label>
+				<input type="checkbox" id="option_1_correct"> Is correct answer
+				</label>
+			</div>
+			<input class="form-control" id="option_1" type="text">
+			
+			<label class="control-label" for="option_2">Option 2</label>
+			<div class="checkbox">
+				<label>
+				<input type="checkbox" id="option_2_correct"> Is correct answer
+				</label>
+			</div>
+			<input class="form-control" id="option_2" type="text">
+
+			<label class="control-label" for="option_3">Option 3</label>
+			<div class="checkbox">
+				<label>
+				<input type="checkbox" id="option_3_correct"> Is correct answer
+				</label>
+			</div>
+			<input class="form-control" id="option_3" type="text">
+			
+			<label class="control-label" for="option_4">Option 4</label>
+			<div class="checkbox">
+				<label>
+				<input type="checkbox" id="option_4_correct"> Is correct answer
+				</label>
+			</div>
+			<input class="form-control" id="option_4" type="text">
+		</div>
+		<a href="#" class="btn btn-primary" onclick="save_question();">
+		Save Question
+		</a>
+	</div>
+	
+	<!-- startup script to hide divs for single-page application -->
+	<script>
+		hide_div('question_builder_mc');
+		hide_div('quiz_builder');
+	</script>
 	
   </body>
 </html>
