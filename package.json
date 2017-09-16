@@ -4,5 +4,8 @@
   "main": "main.js",
   "devDependencies": {
     "electron": "1.7.6"
+  },
+  "dependencies": {
+    "express": "^4.15.4"
   }
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+  	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+  <script src="./backbone.js"></script>
+  <h1>OpenClicker<h1>
+  <br>
+	<label class="control-label" for="client_user_id">Enter Your Unique StudentID:</label>
+	<input class="form-control" id="client_user_id" type="text">
+	<label class="control-label" for="client_quiz_code">Enter Quiz Code:</label>
+	<input class="form-control" id="client_quiz_code" type="text">
+			<!--a href="#" class="btn btn-primary" onclick="">
+		Start Quiz
+		</a-->
+
+	
+	<div id="client_quiz_runner">
+		<h2 id="client_quiz_run_title"> </h2>
+		<div class="btn-group-vertical">
+			<a href="#" id="client_answer_button_1" class="btn btn-default">Button</a>
+			<a href="#" id="client_answer_button_2" class="btn btn-default">Button</a>
+			<a href="#" id="client_answer_button_3" class="btn btn-default">Button</a>
+			<a href="#" id="client_answer_button_4" class="btn btn-default">Button</a>
+		</div>
+		
+		
+	</div>
+  
+	<script>
+		check_quiz_status_on = true;
+		client_get_quiz_status();
+	</script>
+  </body>
+</html>

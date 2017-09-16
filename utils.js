@@ -127,6 +127,7 @@ let load_quiz_in_editor = function () {
 
 var running_quiz = null;
 var running_question_index = -1;
+var running_quiz_code = null;
 let onclick_run_quiz = function () {
 	var {
 		dialog
@@ -151,7 +152,20 @@ let onclick_open_quiz = function() {
 	console.log("opening quiz");
 	console.log(server_handler);
 	server_handler.start_server_listen();
+	var randomstring = require("randomstring");
+	running_quiz_code = randomstring.generate({
+		length: 4,
+		charset: 'alphabetic'
+	}).toUpperCase();
+	console.log("QUIZ CODE GENERATED:" + running_quiz_code);
 	var ip = require("ip");
 	document.getElementById('quiz_join_info').innerText =
-	"Quiz is open, please enter: " + ip.address() + ":" + server_handler.get_port();
+	"Quiz is open, please enter: " + ip.address() + ":" + server_handler.get_port() + " with Quiz Code: " + running_quiz_code;
+}
+
+let onclick_start_quiz = function() {
+	console.log("starting quiz");
+	document.getElementById('open_quiz_button').style.display = 'none';
+	document.getElementById('start_quiz_button').style.display = 'none';
+	running_question_index = 0;
 }
