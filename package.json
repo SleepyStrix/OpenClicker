@@ -6,6 +6,7 @@
     "electron": "1.7.6"
   },
   "dependencies": {
+    "body-parser": "^1.18.1",
     "express": "^4.15.4"
   }
 }

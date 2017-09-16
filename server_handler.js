@@ -3,13 +3,16 @@ const express_app = express();
 const port = 3000;
 const path = require('path');
 const async = require('async');
+const bodyParser = require('body-parser');
 
 let start_server_listen = function () {
 
 	express_app.set('port', port);
 	express_app.use(express.static(path.join(__dirname, 'public')));
+	express_app.use(bodyParser.urlencoded({ extended: false }));
+	express_app.use(bodyParser.json())
 	var server = express_app.listen(express_app.get('port'), function () {});
-
+	
 	express_app.get('/quiz', (request, response) => {
 		if (running_quiz != undefined && running_quiz != null && running_question_index >= 0) {
 			var ques = running_quiz.questions[running_question_index];
@@ -42,9 +45,10 @@ let start_server_listen = function () {
 		}
 	});
 	
+		//express_app.use(bodyParser);
 	express_app.post('/quiz', function (req, res) {
 		console.log("POST RECIEVED");
-		console.log(req);
+		console.log(req.body.quiz_code);
 	});
 }
 
