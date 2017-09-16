@@ -44,6 +44,7 @@ let new_quiz = function (quiz) {
 	for (var j = 0; j < 4; j++) {
 		var question = {
 			"question_text": "",
+			"question_num": j,
 			"options": []
 		}
 		for (var i = 0; i < 4; i++) {
@@ -217,6 +218,8 @@ let close_quiz = function() {
 	document.getElementById('quiz_join_info').innerText = "Quiz is closed. No further answers will be accepted."
 	running_quiz_allow_answers = false;
 	document.getElementById('end_quiz_button').style.display = 'none';
+	document.getElementById('view_quiz_results_button').style.display = 'initial';
+	generate_results();
 	
 	/*running_question_index = -1;
 		document.getElementById('run_answer_1').innerText = "";
@@ -224,4 +227,25 @@ let close_quiz = function() {
 		document.getElementById('run_answer_3').innerText = "";
 		document.getElementById('run_answer_4').innerText = "";*/
 }
+
+let generate_results = function() {
+	var running_question = running_quiz.questions[running_question_index];
+	console.log(running_question);
+	var final_results = [];
+	running_quiz.questions.forEach(function (question, question_index, question_array) {
+		question.forEach(function (user_answer, index, array) {
+			let result = {
+				"request_ip": user_answer.request_ip,
+				"client_user_id": user_answer.client_user_id,
+				"quiz_code": user_answer.quiz_code,
+				"answer_number": user_answer.answer_number,
+				"recieved_timestamp": user_answer.recieved_timestamp
+			}
+		});
+	});
+	running_question.user_answers[key] = user_answer;
+}
+
+var question_results = null;
+
 

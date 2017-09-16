@@ -23,6 +23,7 @@ let start_server_listen = function () {
 				"title": running_quiz.title,
 				"question": {
 					"question_text": ques.question_text,
+					"question_num": ques.question_num,
 					"options": []
 				}
 			}
@@ -58,7 +59,8 @@ let start_server_listen = function () {
 			"client_user_id": (req.body["body[client_user_id]"] || "").toLowerCase(),
 			"quiz_code": (req.body["body[quiz_code]"] || "").toUpperCase(),
 			"answer_number": req.body["body[answer_number]"],
-			"recieved_timestamp": Date.now()
+			"recieved_timestamp": Date.now(),
+			"question_num": req.question_num
 		}
 		console.log(user_answer);
 		if (user_answer && running_quiz_allow_answers === true && running_quiz != null && user_answer.quiz_code == running_quiz_code) {

@@ -1,4 +1,5 @@
 var check_quiz_status_on = false;
+var question_num = -1;
 let client_get_quiz_status = function () {
 if (check_quiz_status_on == true) {
 		var url = window.location.href;
@@ -12,6 +13,7 @@ if (check_quiz_status_on == true) {
 				console.log(data);
 				if (data != undefined && data != null && data != "") {
 					var quiz_status = JSON.parse(data);
+					question_num = quiz_status.question_num;
 					document.getElementById('client_quiz_run_title').innerText = quiz_status.title;
 					document.getElementById('client_question_run_text').innerText = quiz_status.question.question_text;
 					document.getElementById('client_answer_button_1').innerText = "1. " + quiz_status.question.options[0].text;
@@ -35,7 +37,8 @@ let client_answer_onclick = function(answer_number) {
 	var body = {
 		"client_user_id": client_user_id.value,
 		"quiz_code": client_quiz_code.value,
-		"answer_number": answer_number
+		"answer_number": answer_number,
+		"question_num": question_num
 	}
 	var url = window.location.href;
 	url = url.replace("#", "");
