@@ -55,14 +55,19 @@ let start_server_listen = function () {
 		console.log("POST RECIEVED");
 		//TODO: should do json validation here also
 		console.log(req.body);
+		//var body = JSON.parse(req.body);
+		var body = req.body;
+		console.log(body);
 		user_answer = {
 			"request_ip": req.ip,
-			"client_user_id": (req.body["body[client_user_id]"] || "").toLowerCase(),
-			"quiz_code": (req.body["body[quiz_code]"] || "").toUpperCase(),
-			"answer_number": req.body["body[answer_number]"],
+			"client_user_id": (body["body[client_user_id]"] || "").toLowerCase(),
+			"quiz_code": (body["body[quiz_code]"] || "").toUpperCase(),
+			"answer_number": body["body[answer_number]"],
 			"recieved_timestamp": Date.now(),
-			"question_num": req.body.question_num
+			"question_num": body["body[question_num]"],
+			"fuck": "aaaa"
 		}
+		
 		console.log(user_answer);
 		if (user_answer && running_quiz_allow_answers === true && running_quiz != null && user_answer.quiz_code == running_quiz_code) {
 			var key = "USERID:" + user_answer.client_user_id;

@@ -45,7 +45,7 @@ let new_quiz = function (quiz) {
 	for (var j = 0; j < 4; j++) {
 		var question = {
 			"question_text": "",
-			"question_num": j,
+			"question_num": j + 1,
 			"options": []
 		}
 		for (var i = 0; i < 4; i++) {
@@ -64,7 +64,7 @@ let new_quiz = function (quiz) {
 let save_question = function () {
 	var question = {
 		"question_text": "",
-		"question_num": current_question_index,
+		"question_num": current_question_index + 1,
 		"options": []
 	}
 	question.question_text = document.getElementById('question_text').value || "";
@@ -238,7 +238,7 @@ let generate_results = function () {
 		//console.log(question);
 		Object.keys(question.user_answers).forEach(function (user_answer_key, index, array) {
 			//console.log(user_answer);
-			var user_answer = question[user_answer_key];
+			var user_answer = question.user_answers[user_answer_key];
 			let result = {
 				"request_ip": user_answer.request_ip,
 				"client_user_id": user_answer.client_user_id,

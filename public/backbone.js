@@ -13,7 +13,9 @@ if (check_quiz_status_on == true) {
 				console.log(data);
 				if (data != undefined && data != null && data != "") {
 					var quiz_status = JSON.parse(data);
-					question_num = quiz_status.question_num;
+					console.log(quiz_status);
+					//console.log("yeet:" + quiz_status.question);
+					question_num = quiz_status.question.question_num;
 					document.getElementById('client_quiz_run_title').innerText = quiz_status.title;
 					document.getElementById('client_question_run_text').innerText = quiz_status.question.question_text;
 					document.getElementById('client_answer_button_1').innerText = "1. " + quiz_status.question.options[0].text;
@@ -40,6 +42,8 @@ let client_answer_onclick = function(answer_number) {
 		"answer_number": answer_number,
 		"question_num": question_num
 	}
+	//var body = JSON.stringify(body);
+	console.log("BODY: " + body);
 	var url = window.location.href;
 	url = url.replace("#", "");
 	url = url + "quiz";
