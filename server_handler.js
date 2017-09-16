@@ -4,6 +4,7 @@ const port = 3000;
 const path = require('path');
 const async = require('async');
 const bodyParser = require('body-parser');
+const truncate = require('truncate');
 
 let start_server_listen = function () {
 
@@ -48,7 +49,16 @@ let start_server_listen = function () {
 		//express_app.use(bodyParser);
 	express_app.post('/quiz', function (req, res) {
 		console.log("POST RECIEVED");
-		console.log(req.body.quiz_code);
+		//TODO: should do json validation here also
+		//console.log(req.body.quiz_code);
+		user_answer = {
+			"request_ip": req.ip,
+			"client_user_id": truncate(req.body.client_user_id, 32),
+			"quiz_code": truncate(req.body.quiz_code, 4),
+			"answer_number": truncate(req.body.answer_number, 1),
+			"recieved_timestamp": Date.now()			
+		}
+		console.log(user_answer);
 	});
 }
 

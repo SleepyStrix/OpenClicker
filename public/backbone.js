@@ -41,7 +41,12 @@ let client_answer_onclick = function(answer_number) {
 	url = url.replace("#", "");
 	url = url + "quiz";
 	console.log("posting to url: " + url);
-	$.post(url,body).done(function () {
+	$.post({
+		"type": "POST",
+		"url": url,
+		"timeout": 1,
+		"data": { "body": body },
+	}).done(function () {
 		console.log("posted answer: answer_number");
 	});
 }
