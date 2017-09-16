@@ -14,12 +14,11 @@ if (check_quiz_status_on == true) {
 				console.log(data);
 				if (data != undefined && data != null && data != "") {
 					var quiz_status = JSON.parse(data);
-					document.getElementById('quiz_join_info').innerText = quiz_status.title;
-					document.getElementById('client_answer_button_1').innerText = quiz_status.question.options[0];
-					document.getElementById('client_answer_button_2').innerText = quiz_status.question.options[1];
-					document.getElementById('client_answer_button_3').innerText = quiz_status.question.options[2];
-					document.getElementById('client_answer_button_4').innerText = quiz_status.question.options[3];
-					
+					document.getElementById('client_quiz_run_title').innerText = quiz_status.title;
+					document.getElementById('client_answer_button_1').innerText = quiz_status.question.options[0].text;
+					document.getElementById('client_answer_button_2').innerText = quiz_status.question.options[1].text;
+					document.getElementById('client_answer_button_3').innerText = quiz_status.question.options[2].text;
+					document.getElementById('client_answer_button_4').innerText = quiz_status.question.options[3].text;					
 				}
 			//alert('page content: ' + data);
 		});
