@@ -60,20 +60,22 @@ let start_server_listen = function () {
 			"quiz_code": (req.body["body[quiz_code]"] || "").toUpperCase(),
 			"answer_number": req.body["body[answer_number]"],
 			"recieved_timestamp": Date.now(),
-			"question_num": req.question_num
+			"question_num": req.body.question_num
 		}
 		console.log(user_answer);
 		if (user_answer && running_quiz_allow_answers === true && running_quiz != null && user_answer.quiz_code == running_quiz_code) {
-			var key = `USER_ID:${user_answer.client_user_id}`
+			var key = "USERID:" + user_answer.client_user_id;
 				/*var existing_answer = running_quiz_user_answers[key];
 				if (existing_answer) {
 
 				}*/
 			//running_question_index = next_index;
 			//console.log(running_question_index);
-			var running_question = running_quiz.questions[running_question_index];
-			console.log(running_question);
-			running_question.user_answers[key] = user_answer;
+			running_quiz.questions[running_question_index];
+			//console.log(running_question);
+
+			running_quiz.questions[running_question_index].user_answers[key] = user_answer;
+			console.log(running_quiz.questions[running_question_index].user_answers[key]);
 			console.log("user answer stored");
 			//running_quiz_user_answers[key] = user_answer;
 		} else {

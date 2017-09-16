@@ -164,8 +164,9 @@ let onclick_open_quiz = function() {
 	}).toUpperCase();
 	console.log("QUIZ CODE GENERATED:" + running_quiz_code);
 	var ip = require("ip");
-	document.getElementById('quiz_join_info').innerText =
-	"Quiz is OPEN, go to: " + ip.address() + ":" + server_handler.get_port() + " in your web browser. Quiz Code: " + running_quiz_code;
+	document.getElementById('quiz_join_info').innerText = "Quiz is OPEN. Go to Quiz URL in you web browser, then enter the Quiz Code and your ID.";
+	document.getElementById('quiz_address').innerText = ip.address() + ":" + server_handler.get_port()
+	document.getElementById('quiz_code_display').innerText = running_quiz_code;
 	document.getElementById('start_quiz_button').style.display = 'initial';
 	
 	//var running_question = running_quiz.questions[running_question_index];
@@ -229,21 +230,28 @@ let close_quiz = function() {
 }
 
 let generate_results = function() {
-	var running_question = running_quiz.questions[running_question_index];
-	console.log(running_question);
+	//var running_question = running_quiz.questions[running_question_index];
+	//console.log(running_question);
 	var final_results = [];
+	console.log(running_quiz);
 	running_quiz.questions.forEach(function (question, question_index, question_array) {
-		question.forEach(function (user_answer, index, array) {
+		//console.log(question);
+		Object.keys(question.user_answers).forEach(function (user_answer, index, array) {
+			console.log(user_answer);
 			let result = {
 				"request_ip": user_answer.request_ip,
 				"client_user_id": user_answer.client_user_id,
 				"quiz_code": user_answer.quiz_code,
 				"answer_number": user_answer.answer_number,
-				"recieved_timestamp": user_answer.recieved_timestamp
+				"recieved_timestamp": user_answer.recieved_timestamp,
+				"question_number": user_answer.question_num
 			}
+			final_results.push(result);
+			console.log(final_results.length);
 		});
 	});
-	running_question.user_answers[key] = user_answer;
+	//console.log("total results: " + final_results.length);
+	//running_question.user_answers[key] = user_answer;
 }
 
 var question_results = null;
