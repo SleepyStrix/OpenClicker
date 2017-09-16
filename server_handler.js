@@ -16,7 +16,7 @@ let start_server_listen = function () {
 			var quiz_status = {
 				"title" : running_quiz.title,
 				"question" : {
-					"title" : ques.title,
+					"question_text" : ques.question_text,
 					"options" : []
 				}
 			}
@@ -32,7 +32,7 @@ let start_server_listen = function () {
 					console.log("FUC: " + err);
 				} else {
 					console.log("sending status");
-					console.log(quiz_status);
+					//console.log(quiz_status);
 					response.send(JSON.stringify(quiz_status));
 				}
 			});
@@ -40,6 +40,11 @@ let start_server_listen = function () {
 			console.log("running question index: " + running_question_index);
 			response.send("");
 		}
+	});
+	
+	express_app.post('/quiz', function (req, res) {
+		console.log("POST RECIEVED");
+		console.log(req);
 	});
 }
 
