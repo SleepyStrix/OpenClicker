@@ -41,7 +41,7 @@ let new_quiz = function (quiz) {
 		"title": "",
 		"questions": []
 	}
-	for (var j = 0; j < 5; j++) {
+	for (var j = 0; j < 4; j++) {
 		var question = {
 			"question_text": "",
 			"options": []
@@ -125,12 +125,13 @@ let load_quiz_in_editor = function () {
 	//TODO: load quiz to be edited later
 }
 
-var running_quiz_allow_answers = false;
+var running_quiz_results = false;
 var running_quiz = null;
 var running_question_index = -1;
 var running_quiz_code = null;
 var running_quiz_user_answers = [];
 let onclick_run_quiz = function () {
+	//console.log("run clicke");
 	var {
 		dialog
 	} = require('electron').remote;
@@ -145,14 +146,15 @@ let onclick_run_quiz = function () {
 		console.log("Quiz loaded");
 		console.log(quiz);
 		switch_div('main_menu', 'quiz_runner');
-		console.log(document.getElementById('quiz_run_title'));
+		//console.log(document.getElementById('quiz_run_title'));
 		document.getElementById('quiz_run_title').innerText = running_quiz.title;
 	}
 }
 
 let onclick_open_quiz = function() {
 	console.log("opening quiz");
-	console.log(server_handler);
+		document.getElementById('open_quiz_button').style.display = 'none';
+	//console.log(server_handler);
 	server_handler.start_server_listen();
 	var randomstring = require("randomstring");
 	running_quiz_code = randomstring.generate({
@@ -162,32 +164,64 @@ let onclick_open_quiz = function() {
 	console.log("QUIZ CODE GENERATED:" + running_quiz_code);
 	var ip = require("ip");
 	document.getElementById('quiz_join_info').innerText =
-	"Quiz is open, please enter: " + ip.address() + ":" + server_handler.get_port() + " with Quiz Code: " + running_quiz_code;
+	"Quiz is OPEN, go to: " + ip.address() + ":" + server_handler.get_port() + " in your web browser. Quiz Code: " + running_quiz_code;
+	document.getElementById('start_quiz_button').style.display = 'initial';
+	
+	//var running_question = running_quiz.questions[running_question_index];
+	//prep quiz object to hold answers
+	for(var i = 0; i < running_quiz.questions.length; i++) {
+		running_quiz.questions[i]["user_answers"] = [];
+	}
 }
 
 let onclick_start_quiz = function() {
 	console.log("starting quiz");
 	running_quiz_allow_answers = true;
-	document.getElementById('open_quiz_button').style.display = 'none';
+
 	document.getElementById('start_quiz_button').style.display = 'none';
+	document.getElementById('next_question_button').style.display = 'initial';
 	next_question();
 }
 
 let next_question = function() {
 	let next_index = running_question_index + 1;
-	if (next_index >= 4) {
+	console.log("next-index: " + next_index);
+	if(next_index == 3) {
+		document.getElementById('next_question_button').style.display = 'none';
+		if (running_quiz_allow_answers) {
+			document.getElementById('end_quiz_button').style.display = 'initial';
+		}
+	} else {
+		document.getElementById('next_question_button').style.display = 'initial';
+		document.getElementById('end_quiz_button').style.display = 'none';
+	}
+
+	if (next_index == 4) {
 		
 	} else {
 		running_question_index = next_index;
 		console.log(running_question_index);
 		var running_question = running_quiz.questions[running_question_index];
-		document.getElementById('run_answer_1').innerText = running_question.options[0].text;
-		document.getElementById('run_answer_2').innerText = running_question.options[1].text;
-		document.getElementById('run_answer_3').innerText = running_question.options[2].text;
-		document.getElementById('run_answer_4').innerText = running_question.options[3].text;	
+		document.getElementById('run_answer_1').innerText = "1. " + running_question.options[0].text;
+		document.getElementById('run_answer_2').innerText = "2. " + running_question.options[1].text;
+		document.getElementById('run_answer_3').innerText = "3. " + running_question.options[2].text;
+		document.getElementById('run_answer_4').innerText = "4. " + running_question.options[3].text;
+		//alert(running_question.question_text);
+		document.getElementById('running_question_text').innerText = running_question.question_text;
 	}
+	
+	
 }
 
-let end_quiz = function() {
+let close_quiz = function() {
+	document.getElementById('quiz_join_info').innerText = "Quiz is closed. No further answers will be accepted."
 	running_quiz_allow_answers = false;
+	document.getElementById('end_quiz_button').style.display = 'none';
+	
+	/*running_question_index = -1;
+		document.getElementById('run_answer_1').innerText = "";
+		document.getElementById('run_answer_2').innerText = "";
+		document.getElementById('run_answer_3').innerText = "";
+		document.getElementById('run_answer_4').innerText = "";*/
 }
+

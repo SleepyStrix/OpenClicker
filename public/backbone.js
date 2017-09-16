@@ -14,10 +14,10 @@ if (check_quiz_status_on == true) {
 					var quiz_status = JSON.parse(data);
 					document.getElementById('client_quiz_run_title').innerText = quiz_status.title;
 					document.getElementById('client_question_run_text').innerText = quiz_status.question.question_text;
-					document.getElementById('client_answer_button_1').innerText = quiz_status.question.options[0].text;
-					document.getElementById('client_answer_button_2').innerText = quiz_status.question.options[1].text;
-					document.getElementById('client_answer_button_3').innerText = quiz_status.question.options[2].text;
-					document.getElementById('client_answer_button_4').innerText = quiz_status.question.options[3].text;					
+					document.getElementById('client_answer_button_1').innerText = "1. " + quiz_status.question.options[0].text;
+					document.getElementById('client_answer_button_2').innerText = "2. " + quiz_status.question.options[1].text;
+					document.getElementById('client_answer_button_3').innerText = "3. " + quiz_status.question.options[2].text;
+					document.getElementById('client_answer_button_4').innerText = "4. " + quiz_status.question.options[3].text;					
 				} else {
 					document.getElementById('client_quiz_run_title').innerText = "";
 					document.getElementById('client_answer_button_1').innerText = "";
