@@ -4,6 +4,7 @@ const {
 const fs = require('fs');
 const server_handler = require("./server_handler");
 const query = require('array-query');
+const chart = require('chart.js');
 
 let test = function () {
 	console.log("test debug");
@@ -220,6 +221,7 @@ let close_quiz = function () {
 		running_quiz_allow_answers = false;
 	document.getElementById('end_quiz_button').style.display = 'none';
 	document.getElementById('view_quiz_results_button').style.display = 'initial';
+	document.getElementById('quiz_runner').style.display = 'none';
 	generate_results();
 
 	/*running_question_index = -1;
@@ -228,14 +230,15 @@ let close_quiz = function () {
 	document.getElementById('run_answer_3').innerText = "";
 	document.getElementById('run_answer_4').innerText = "";*/
 }
+var final_results = [];
 
 let generate_results = function () {
 	//var running_question = running_quiz.questions[running_question_index];
 	//console.log(running_question);
-	var final_results = [];
+	console.log("FUCK");
 	console.log(running_quiz);
 	running_quiz.questions.forEach(function (question, question_index, question_array) {
-		//console.log(question);
+		console.log(question);
 		Object.keys(question.user_answers).forEach(function (user_answer_key, index, array) {
 			//console.log(user_answer);
 			var user_answer = question.user_answers[user_answer_key];
@@ -245,7 +248,8 @@ let generate_results = function () {
 				"quiz_code": user_answer.quiz_code,
 				"answer_number": user_answer.answer_number,
 				"recieved_timestamp": user_answer.recieved_timestamp,
-				"question_number": user_answer.question_num
+				"question_number": user_answer.question_num,
+				"question_text": question.question_text
 			}
 			final_results.push(result);
 			//console.log(final_results.length);
@@ -255,11 +259,94 @@ let generate_results = function () {
 	/*final_results.forEach(function (question, question_index, question_array) {
 
 	});*/
-	/*for (int i = 0; i < 4; i++) {
-	var q1 = query("question_number")
+	//foreach question, count the number of unique responses to each response
+	/*console.log("FINAL RESULTS:");
+	console.log(final_results);
+	var answer_counts = [4]
+	//foreach question
+	for (var i = 0; i < 4; i++) {
+
+		var q1 = query("question_number");
+		var question_num = i + 1;
+		console.log("question num: " + question_num);
+		var responses_for_question = q1.equals("" + question_num).on(final_results);
+		//foreach answer number
+		//for (var j = 0; j < 4; j++) {
+
+		//}
+		//console.log(result);
+
 	}*/
+
 	//console.log("total results: " + final_results.length);
 	//running_question.user_answers[key] = user_answer;
+	chart_answer_counts_for_question(2);
 }
 
-var question_results = null;
+let chart_answer_counts_for_question = function (question_number) {
+
+	var answer_counts = [0, 0, 0, 0];
+	for (var i = 0; i < 4; i++) {
+		answer_counts[i] = get_answer_counts_by_question(question_number, i + 1);
+	}
+	//console.log(answer_counts);
+	document.getElementById('result_vis_title').innerText = 
+	"" + get_question_text(question_number);
+	
+	//get_answer_counts_by_question(final_results, 1, 1);
+	var ctx = document.getElementById("results_chart");
+	var myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: ["1", "2", "3", "4"],
+				datasets: [{
+						label: 'Selected Answers',
+						"data": answer_counts,
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.4)',
+							'rgba(54, 162, 235, 0.4)',
+							'rgba(255, 206, 86, 0.4)',
+							'rgba(75, 192, 192, 0.4)'
+						],
+						borderColor: [
+							'rgba(255,99,132,1)',
+							'rgba(54, 162, 235, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)'
+						],
+						borderWidth: 1
+					}
+				]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+							ticks: {
+								beginAtZero: true
+							}
+						}
+					]
+				}
+			}
+		});
+}
+
+let get_answer_counts_by_question = function (question_number, answer_number) {
+	
+	var q1 = query("question_number");
+	q1.is("" + question_number);
+	q1.and("answer_number");
+	var results = q1.is("" + answer_number).on(final_results);
+	return results.length;
+	//console.log(results);
+
+}
+
+let get_question_text = function(question_number) {
+	var q1 = query("question_number");
+	q1.is("" + question_number);
+	var result = q1.on(final_results);
+	if (result && result.length > 0) {
+			return result[0].question_text;
+	}
+}
