@@ -1,6 +1,6 @@
 {
   "name": "OpenClicker",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "main.js",
   "devDependencies": {
     "electron": "1.7.6"
@@ -15,6 +15,7 @@
     "express": "^4.15.4",
     "ip": "^1.1.5",
     "jquery": "^3.2.1",
+    "json2csv": "^3.11.2",
     "randomstring": "^1.1.5",
     "truncate": "^2.0.0"
   },

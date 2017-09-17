@@ -235,7 +235,6 @@ var final_results = [];
 let generate_results = function () {
 	//var running_question = running_quiz.questions[running_question_index];
 	//console.log(running_question);
-	console.log("FUCK");
 	console.log(running_quiz);
 	running_quiz.questions.forEach(function (question, question_index, question_array) {
 		console.log(question);
@@ -255,6 +254,8 @@ let generate_results = function () {
 			//console.log(final_results.length);
 		});
 	});
+	
+	document.getElementById('result_vis_menu').style.display = 'initial';
 
 	/*final_results.forEach(function (question, question_index, question_array) {
 
@@ -266,15 +267,15 @@ let generate_results = function () {
 	//foreach question
 	for (var i = 0; i < 4; i++) {
 
-		var q1 = query("question_number");
-		var question_num = i + 1;
-		console.log("question num: " + question_num);
-		var responses_for_question = q1.equals("" + question_num).on(final_results);
-		//foreach answer number
-		//for (var j = 0; j < 4; j++) {
+	var q1 = query("question_number");
+	var question_num = i + 1;
+	console.log("question num: " + question_num);
+	var responses_for_question = q1.equals("" + question_num).on(final_results);
+	//foreach answer number
+	//for (var j = 0; j < 4; j++) {
 
-		//}
-		//console.log(result);
+	//}
+	//console.log(result);
 
 	}*/
 
@@ -290,9 +291,9 @@ let chart_answer_counts_for_question = function (question_number) {
 		answer_counts[i] = get_answer_counts_by_question(question_number, i + 1);
 	}
 	//console.log(answer_counts);
-	document.getElementById('result_vis_title').innerText = 
-	"" + get_question_text(question_number);
-	
+	/*document.getElementById('result_vis_title').innerText =
+		"" + get_question_text(question_number);*/
+
 	//get_answer_counts_by_question(final_results, 1, 1);
 	var ctx = document.getElementById("results_chart");
 	var myChart = new Chart(ctx, {
@@ -332,7 +333,7 @@ let chart_answer_counts_for_question = function (question_number) {
 }
 
 let get_answer_counts_by_question = function (question_number, answer_number) {
-	
+
 	var q1 = query("question_number");
 	q1.is("" + question_number);
 	q1.and("answer_number");
@@ -342,11 +343,48 @@ let get_answer_counts_by_question = function (question_number, answer_number) {
 
 }
 
-let get_question_text = function(question_number) {
+let get_question_text = function (question_number) {
 	var q1 = query("question_number");
 	q1.is("" + question_number);
 	var result = q1.on(final_results);
 	if (result && result.length > 0) {
-			return result[0].question_text;
+		return result[0].question_text;
 	}
+}
+
+let export_csv_button_pressed = function () {
+	var json2csv = require('json2csv');
+	var fs = require('fs');
+	var fields = [
+		'request_ip',
+		'client_user_id',
+		'quiz_code',
+		'answer_number',
+		'recieved_timestamp',
+		'question_number',
+		'question_text'
+	];
+
+	var csv = json2csv({
+			data: final_results,
+			fields: fields
+		});
+
+	var {
+		dialog
+	} = require('electron').remote;
+	var path = dialog.showSaveDialog({
+			buttonLabel: "Save Results"
+		}) + ".csv";
+	// writefile.js
+
+	//var content = JSON.stringify(current_quiz);
+	if (path != undefined && path != null && path != "") {
+		fs.writeFile(path, csv, function (err) {
+			if (err)
+				throw err;
+			console.log('file saved');
+		});
+	}
+
 }

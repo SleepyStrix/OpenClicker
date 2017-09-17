@@ -167,6 +167,14 @@
 	<div id="results_menu">
 		
 	<div>
+	
+	<div id="result_vis_menu">
+		<a href="#" id="export_results_button" align="center" class="btn btn-primary" onclick="export_csv_button_pressed();">
+			Export Results
+		</a>
+		<h2 id="result_vis_title"></h2>
+		<canvas id="results_chart" width="200" height="200"></canvas>
+	</div>
 
 	<!-- startup script to hide divs for single-page application -->
 	<script>
@@ -177,12 +185,10 @@
 		document.getElementById('next_question_button').style.display = 'none';
 		document.getElementById('end_quiz_button').style.display = 'none';
 		document.getElementById('view_quiz_results_button').style.display = 'none';
+		hide_div('result_vis_menu');
 	</script>
 	
-	<div id="result_vis_menu">
-	<h2 id="result_vis_title"></h2>
-	<canvas id="results_chart" width="350" height="300"></canvas>
-	</div>
+
 	
   </body>
 </html>
