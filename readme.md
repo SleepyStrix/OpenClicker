@@ -1,5 +1,5 @@
 ## Inspiration
-Too many students are forced to waste money on the "iClicker," a massively overpriced hand-held remote polling device popular with some college professors for taking attendance, quizzes, and gauging lecture understanding in large classes. Another example of the routine price scalping for school supplies students face every year, the primary motivation for my product is: ***Fuck iClicker.***
+Too many students are forced to waste money on the "iClicker," a massively overpriced hand-held remote polling device popular with some college professors for taking attendance, quizzes, and gauging lecture understanding in large classes. Another example of the routine price scalping for school supplies students face every year, the primary motivation for my OpenClicker is: ***I want my $40 back***
 ## What it does
 
 >No clicker hardware.
@@ -38,7 +38,7 @@ Electron
 
 More advance usage of Node.js & JavaScript
 
-Caffeinated cereal exists and keeps me v e r y awake.
+Caffinated cereal exists and keeps me v e r y awake.
 
 ## What's next for OpenClicker
 Code legibility and documentation overhaul
